@@ -1,10 +1,23 @@
 if (Meteor.isClient) {
-  stack = new Iron.MiddlewareStack;
+  one = new Iron.MiddlewareStack;
+  two = new Iron.MiddlewareStack;
+  three = new Iron.MiddlewareStack;
 
-  stack.push('/1', function () {
-    console.log('url: ', this.url);
-    console.log('originalUrl: ', this.originalUrl);
-  }, {mount: true});
+  one.push(function () {
+    console.log('1');
+    this.next();
+  });
 
-  stack.dispatch('/1/2');
+  two.push(function () {
+    console.log('2');
+    this.next();
+  });
+
+  three.push(function () {
+    console.log('3');
+    this.next();
+  });
+
+  all = one.concat(two, three);
+  all.dispatch();
 }
