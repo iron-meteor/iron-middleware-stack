@@ -1,25 +1,10 @@
 if (Meteor.isClient) {
-  stack = new Iron.PathStack;
+  stack = new Iron.MiddlewareStack;
 
-  context = {
-    hi: function (id) { console.log('hi ' + id); }
-  };
+  stack.push('/1', function () {
+    console.log('url: ', this.url);
+    console.log('originalUrl: ', this.originalUrl);
+  }, {mount: true});
 
-  stack.push('/items/:id', function (req, res, next) {
-    this.hi('item!');
-    console.log('item!');
-  
-  stack.push('/server', function (req, res, next) {
-    this.hi('server!');
-    next();
-  }, {
-    where: 'server'
-  });
-
-  stack.onServerDispatch(function () {
-    console.log(this);
-    console.log('onServerDispatch: ', arguments);
-  });
-
-  stack.dispatch('/server');
+  stack.dispatch('/1/2');
 }
