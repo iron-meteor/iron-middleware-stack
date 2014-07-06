@@ -8,16 +8,13 @@ if (Meteor.isClient) {
     this.next();
   });
 
-  two.push(function () {
-    console.log('2');
+  hooks = [function () { 
+    console.log('h1');
     this.next();
-  });
+  }, function () { 
+    console.log('h2'); 
+  }];
 
-  three.push(function () {
-    console.log('3');
-    this.next();
-  });
-
-  all = one.concat(two, three);
-  all.dispatch();
+  one.append(hooks);
+  one.dispatch();
 }

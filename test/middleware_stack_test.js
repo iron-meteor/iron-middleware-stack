@@ -265,3 +265,6 @@ Tinytest.add('MiddlewareStack - mounting paths', function (test) {
     test.equal(calls[1].args[0].originalUrl, '/foo/bar/baz');
   }
 });
+
+//TODO concat
+//TODO append
