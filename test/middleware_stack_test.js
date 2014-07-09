@@ -210,13 +210,13 @@ Tinytest.add('MiddlewareStack - mounting paths', function (test) {
     test.equal(calls.length, 2);
 
     // this.url
-    test.equal(calls[0].thisArg.url, '/bar/baz');
-    test.equal(calls[0].thisArg.originalUrl, '/foo/bar/baz');
+    test.equal(calls[0].thisArg.url, '/bar/baz', 'url wrong on controller');
+    test.equal(calls[0].thisArg.originalUrl, '/foo/bar/baz', 'originalUrl wrong on controller');
 
     // fn (req, res, next)
     //  req.url
-    test.equal(calls[0].args[0].url, '/bar/baz');
-    test.equal(calls[0].args[0].originalUrl, '/foo/bar/baz');
+    test.equal(calls[0].args[0].url, '/bar/baz', 'url wrong on req');
+    test.equal(calls[0].args[0].originalUrl, '/foo/bar/baz', 'originalUrl wrong on req');
 
     // now make sure the url is set back to the originalUrl for non mounted
     // handlers.
