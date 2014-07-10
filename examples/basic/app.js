@@ -1,20 +1,30 @@
 if (Meteor.isClient) {
   one = new Iron.MiddlewareStack;
-  two = new Iron.MiddlewareStack;
-  three = new Iron.MiddlewareStack;
 
-  one.push(function () {
+  one.push(function one() {
     console.log('1');
-    this.next();
+    throw new Error('wtf!!!');
   });
 
-  hooks = [function () { 
-    console.log('h1');
-    this.next();
-  }, function () { 
-    console.log('h2'); 
-  }];
+  one.push(function two() {
+    console.log('2');
+  });
 
-  one.append(hooks);
-  one.dispatch();
+  one.push(function three() {
+    console.log('3');
+  });
+
+  options = {};
+  options.next = function (err) {
+    if (err) {
+      console.log('about to throw!');
+      throw err;
+    }
+  };
+
+  try {
+    one.dispatch('/', options);
+  } catch (err) {
+    console.log(err);
+  }
 }
