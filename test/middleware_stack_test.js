@@ -1,4 +1,4 @@
-Tinytest.add('MiddlewareStack - Handler', function (test) {
+Tinytest.add('MiddlewareStack - handler basics', function (test) {
   var handler;
   var fn = function myName () {};
   var opts = {};
@@ -7,7 +7,7 @@ Tinytest.add('MiddlewareStack - Handler', function (test) {
   // middleware handler
   handler = new Handler(fn);
   test.equal(handler.handle, fn);
-  test.equal(handler.name, 'myName');
+  test.equal(handler.name, 'myName', 'name is "myName"');
   test.equal(handler.where, 'client');
   test.isTrue(handler.test('/'));
   test.isTrue(handler.test('/match/everything'));
@@ -15,7 +15,7 @@ Tinytest.add('MiddlewareStack - Handler', function (test) {
   opts.name = 'newName';
   handler = new Handler('/items/:id', fn, opts);
   test.equal(handler.handle, fn);
-  test.equal(handler.name, 'newName');
+  test.equal(handler.name, 'newName', 'name is "newName"');
   test.equal(handler.options, opts);
   test.isTrue(handler.test('/items/1'));
   test.isTrue(handler.test('/items/2'));
@@ -31,6 +31,27 @@ Tinytest.add('MiddlewareStack - Handler', function (test) {
   handler = new Handler('/items/:id', fn);
   var params = handler.params('/items/5');
   test.equal(params.id, "5");
+});
+
+Tinytest.add('MiddlewareStack - handler names and paths', function (test) {
+  var handler;
+
+  // path is a name
+  handler = new Handler('home', {});
+  test.equal(handler.name, 'home', 'name is "home"');
+  test.equal(handler.path, '/home', 'path is "/home"');
+
+  // path is an option
+  handler = new Handler('home', {path: '/foo'});
+  test.equal(handler.name, 'home', 'name is "home"');
+  test.equal(handler.path, '/foo', 'path is "/foo"');
+
+  handler = new Handler('/home', {path: '/bar'});
+  test.equal(handler.path, '/bar', 'path is "/bar"');
+
+  handler = new Handler('/home', {path: '/bar', name: 'foo'});
+  test.equal(handler.path, '/bar', 'path is "/bar"');
+  test.equal(handler.name, 'foo', 'name is "foo"');
 });
 
 Tinytest.add('MiddlewareStack - create and find by name', function (test) {
