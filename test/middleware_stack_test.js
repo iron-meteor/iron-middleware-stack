@@ -287,5 +287,15 @@ Tinytest.add('MiddlewareStack - mounting paths', function (test) {
   }
 });
 
+Tinytest.add('MiddlewareStack - append with options', function (test) {
+  var fn1 = function () {};
+  var fn2 = function () {};
+  var stack = new Iron.MiddlewareStack;
+  stack.append(fn1, fn2, {where: 'server'});
+
+  test.equal(stack._stack[0].where, 'server');
+  test.equal(stack._stack[1].where, 'server');
+});
+
 //TODO concat
 //TODO append
