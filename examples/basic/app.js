@@ -3,7 +3,6 @@ if (Meteor.isClient) {
 
   one.push(function one() {
     console.log('1');
-    throw new Error('wtf!!!');
   });
 
   one.push(function two() {
