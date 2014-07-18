@@ -18,5 +18,6 @@ Package.on_test(function (api) {
   api.use('iron:middleware-stack');
   api.use('tinytest');
   api.use('test-helpers');
-  api.addFiles('test/middleware_stack_test.js', ['client', 'server']);
+  api.addFiles('test/handler_test.js');
+  api.addFiles('test/middleware_stack_test.js');
 });

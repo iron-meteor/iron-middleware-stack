@@ -6,4 +6,5 @@
 standard-app-packages
 autopublish
 insecure
-iron-middleware-stack
+iron:middleware-stack
+
