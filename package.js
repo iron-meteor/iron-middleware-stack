@@ -5,18 +5,18 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-  api.use('iron:core');
-  api.imply('iron:core');
-  api.use('iron:url');
-  api.addFiles('lib/handler.js');
-  api.addFiles('lib/middleware_stack.js');
+  api.use('iron-core');
+  api.imply('iron-core');
+  api.use('iron-url');
+  api.add_files('lib/handler.js');
+  api.add_files('lib/middleware_stack.js');
   api.export('Handler', {testOnly: true});
 });
 
 Package.on_test(function (api) {
-  api.use('iron:middleware-stack');
+  api.use('iron-middleware-stack');
   api.use('tinytest');
   api.use('test-helpers');
-  api.addFiles('test/handler_test.js');
-  api.addFiles('test/middleware_stack_test.js');
+  api.add_files('test/handler_test.js');
+  api.add_files('test/middleware_stack_test.js');
 });
