@@ -9,6 +9,7 @@ Package.on_use(function (api) {
   api.imply('iron:core');
 
   api.use('iron:url@0.4.0-rc0');
+
   api.add_files('lib/handler.js');
   api.add_files('lib/middleware_stack.js');
   api.export('Handler', {testOnly: true});
