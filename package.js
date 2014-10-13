@@ -5,6 +5,8 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
+  api.versionsFrom('METEOR@0.9.2');
+
   api.use('underscore');
   
   api.use('iron:core@1.0.0-pre4');
