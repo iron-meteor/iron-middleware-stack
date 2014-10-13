@@ -1,14 +1,14 @@
 Package.describe({
   summary: "Client and server middleware support inspired by Connect.",
-  version: "1.0.0-pre3",
+  version: "1.0.0-pre4",
   git: "https://github.com/eventedmind/iron-middleware-stack"
 });
 
 Package.on_use(function (api) {
-  api.use('iron:core@1.0.0-pre3');
+  api.use('iron:core@1.0.0-pre4');
   api.imply('iron:core');
 
-  api.use('iron:url@1.0.0-pre3');
+  api.use('iron:url@1.0.0-pre4');
 
   api.add_files('lib/handler.js');
   api.add_files('lib/middleware_stack.js');
