@@ -20,6 +20,15 @@ Tinytest.add('MiddlewareStack - handler basics', function (test) {
   test.isTrue(handler.test('/items/1'));
   test.isTrue(handler.test('/items/2'));
 
+
+  handler = new Handler('/items/:id?', fn, opts);
+  test.isTrue(handler.test('/items/1'));
+  test.isTrue(handler.test('/items'));
+
+  handler = new Handler(/.*/, fn, opts);
+  test.isTrue(handler.test('/'));
+  test.isTrue(handler.test('/foo'));
+
   var called = false;
   var thisArg = {
     methodName: function () {called = true;}
