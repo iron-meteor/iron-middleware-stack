@@ -151,3 +151,32 @@ Tinytest.add('MiddlewareStack - dispatch callback', function (test) {
     test.equal(calls[1], 'done', "done called");
   }
 });
+
+if (Meteor.isServer) {
+  var Fiber = Npm.require('fibers');
+  Tinytest.addAsync('MiddlewareStack - async next maintains fibers', function (test, done) {
+    var envVar = new Meteor.EnvironmentVariable;
+    
+    envVar.withValue(true, function () {
+      var stack = new Iron.MiddlewareStack;
+      
+      test.isTrue(envVar.getOrNullIfOutsideFiber());
+      stack.push(function(req, res, next) {
+        // break out of the current fiber
+        setTimeout(function() {
+          next();
+        }, 0);
+      }, {where: 'server'});
+
+      stack.push(function(req, res, next) {
+        test.isTrue(envVar.getOrNullIfOutsideFiber());
+        this.next();
+      }, {where: 'server'});
+    
+      stack.dispatch('/', {}, function () {
+        test.isTrue(envVar.getOrNullIfOutsideFiber());
+        done();
+      });
+    });
+  });
+}
