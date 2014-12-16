@@ -41,3 +41,14 @@ Tinytest.add('MiddlewareStack - handler basics', function (test) {
   var params = handler.params('/items/5');
   test.equal(params.id, "5");
 });
+
+Tinytest.add('Handler - test', function (test) {
+  var handler = new Handler('/testme', function () {}, {
+    where: 'server',
+    method: 'GET'
+  });
+
+  test.isTrue(handler.test('/testme', {where: 'server', method: 'GET'}));
+  test.isFalse(handler.test('/testme', {where: 'client', method: 'GET'}));
+  test.isFalse(handler.test('/testme', {where: 'server', method: 'POST'}));
+});
