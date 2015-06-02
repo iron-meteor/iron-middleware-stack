@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Client and server middleware support inspired by Connect.",
-  version: "1.0.8",
+  version: "1.0.9",
   git: "https://github.com/eventedmind/iron-middleware-stack"
 });
 
