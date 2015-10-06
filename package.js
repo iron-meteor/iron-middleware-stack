@@ -8,7 +8,9 @@ Package.on_use(function (api) {
   api.versionsFrom('METEOR@0.9.2');
 
   api.use('underscore');
-  
+
+  api.use('ejson');
+
   api.use('iron:core@1.0.8');
   api.imply('iron:core');
 
