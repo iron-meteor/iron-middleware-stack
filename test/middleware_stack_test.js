@@ -19,19 +19,6 @@ Tinytest.add('MiddlewareStack - handler names and paths', function (test) {
   test.equal(handler.name, 'foo', 'name is "foo"');
 });
 
-Tinytest.add('MiddlewareStack - create and find by name', function (test) {
-  // basically just test that a handler gets created and keyed by name if thee's
-  // a name. Also test duplicate named handlers throws an error.
-
-  var stack = new Iron.MiddlewareStack;
-  stack._create('/items', function () {}, {name: 'items'});
-  test.isTrue(stack.findByName('items'));
-
-  test.throws(function () {
-    // same name
-    stack._create('/items', function () {}, {name: 'items'});
-  });
-});
 
 Tinytest.add('MiddlewareStack - push', function (test) {
   var stack = new Iron.MiddlewareStack;
@@ -49,24 +36,6 @@ Tinytest.add('MiddlewareStack - insertAt', function (test) {
   stack.push(fns[2]);
 
   stack.insertAt(1, fns[1]);
-  test.equal(stack._stack[1].handle, fns[1]);
-});
-
-Tinytest.add('MiddlewareStack - insertBefore', function (test) {
-  var stack = new Iron.MiddlewareStack;
-  var fns = [function one() {}, function two() {}, function three() {}];
-  stack.push(fns[0]);
-  stack.push(fns[2]);
-  stack.insertBefore('three', fns[1]);
-  test.equal(stack._stack[1].handle, fns[1]);
-});
-
-Tinytest.add('MiddlewareStack - insertAfter ', function (test) {
-  var stack = new Iron.MiddlewareStack;
-  var fns = [function one() {}, function two() {}, function three() {}];
-  stack.push(fns[0]);
-  stack.push(fns[2]);
-  stack.insertAfter('one', fns[1]);
   test.equal(stack._stack[1].handle, fns[1]);
 });
 
@@ -120,7 +89,7 @@ Tinytest.add('MiddlewareStack - dispatch iteration with this.next', function (te
 Tinytest.add('MiddlewareStack - dispatch callback', function (test) {
   var stack = new Iron.MiddlewareStack;
   var calls = [];
-  
+
   if (Meteor.isClient) {
     stack.push(function m1 () {
       calls.push('m1');
@@ -156,10 +125,10 @@ if (Meteor.isServer) {
   var Fiber = Npm.require('fibers');
   Tinytest.addAsync('MiddlewareStack - async next maintains fibers', function (test, done) {
     var envVar = new Meteor.EnvironmentVariable;
-    
+
     envVar.withValue(true, function () {
       var stack = new Iron.MiddlewareStack;
-      
+
       test.isTrue(envVar.getOrNullIfOutsideFiber());
       stack.push(function(req, res, next) {
         // break out of the current fiber
@@ -172,7 +141,7 @@ if (Meteor.isServer) {
         test.isTrue(envVar.getOrNullIfOutsideFiber());
         this.next();
       }, {where: 'server'});
-    
+
       stack.dispatch('/', {}, function () {
         test.isTrue(envVar.getOrNullIfOutsideFiber());
         done();
