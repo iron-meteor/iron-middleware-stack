@@ -1,7 +1,7 @@
 Package.describe({
   name: 'iron:middleware-stack',
   summary: 'Client and server middleware support inspired by Connect.',
-  version: '1.1.0',
+  version: '1.1.1',
   git: 'https://github.com/iron-meteor/iron-middleware-stack'
 });
 
